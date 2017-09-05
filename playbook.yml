@@ -1,10 +1,24 @@
 ---
+- hosts: all
+  roles:
+    - ANXS.hostname
+    - Stouts.timezone
+    - ntp
+
+  vars:
+    timezone_enabled: yes 
+    timezone_timezone: Europe/Moscow
+#  tasks:
+#    - raw: which python || apt-get update
+#      tags: install_python
+#    - raw: (which python && which aptitude) || apt-get install -y python python-apt aptitude
+#      tags: install_python
 - hosts: db
   roles:
     - ANXS.postgresql
-    - ANXS.hostname
     - { role: ansible-elasticsearch, es_instance_name: "node1" }
   become: yes
+
   vars:
     postgresql_user: wwwkiiiosk
     postgresql_database: kiosk_production
@@ -19,8 +33,7 @@
     postgresql_service_enabled: false # should the service be enabled, default is true
 
     postgresql_pg_hba_passwd_hosts:
-      - { type: local, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '148.251.195.87/32', method: 'md5', comment: '' }
-      - { type: local, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '148.251.195.87/32', method: 'md5', comment: '' }
+      - { type: local, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '136.243.75.105/32', method: 'md5', comment: 'srv-1.kiiiosk.ru' }
 
     postgresql_user_privileges:
       - name: '{{ postgresql_user }}'

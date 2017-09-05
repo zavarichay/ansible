@@ -1,7 +1,8 @@
 local-configure.yml
 .vagrant/
 docs/_build/
-shared_roles/*
+roles/*
+.fact_caching/
 ._*
 bin/
 lib/

@@ -1,4 +1,4 @@
-all : remote galaxy playbook
+all : galaxy remote playbook
 
 playbook :
 	ansible-playbook ./playbook.yml
@@ -10,4 +10,4 @@ ping :
 	ansible -m ping all
 
 remote :
-	ssh root@db2.kiiiosk.ru "sudo apt-get update && sudo apt-get install -y software-properties-common && sudo apt-add-repository ppa:ansible/ansible && sudo apt-get update && sudo apt-get install -y ansible"
+	ssh root@db2.kiiiosk.ru "which ansible || (sudo apt-get update && sudo apt-get install -y software-properties-common && sudo apt-add-repository ppa:ansible/ansible && sudo apt-get update && sudo apt-get install -y ansible)"
