@@ -4,10 +4,15 @@
     - ANXS.hostname
     - Stouts.timezone
     - ntp
+    - flaminem.zabbix-agent
 
   # must be yes for zabbix-agent
   gather_facts: yes
   vars:
+    zabbix_common_config_minor_version: '3.2'
+    zabbix_agent_config_server: '94.232.57.6,136.243.75.79,127.0.0.1,148.251.195.87'
+    zabbix_agent_config_server_active: '94.232.57.6'
+
     timezone_enabled: yes 
     timezone_timezone: Europe/Moscow
 #  tasks:
@@ -15,13 +20,21 @@
 #      tags: install_python
 #    - raw: (which python && which aptitude) || apt-get install -y python python-apt aptitude
 #      tags: install_python
+
 - hosts: db
   roles:
     - ANXS.postgresql
+    - firewall
     - { role: ansible-elasticsearch, es_instance_name: "node1" }
   become: yes
 
   vars:
+    firewall_allowed_tcp_ports: 22
+    firewall_additional_rules:
+      - "iptables -A INPUT -s 136.243.75.105  -j ACCEPT -m comment --comment srv-1.kiiiosk.ru"
+      - "iptables -A INPUT -s 136.243.75.79 -j ACCEPT -m comment --comment db1.kiiiosk.ru"
+      - "iptables -A INPUT -s 136.243.75.106 -j ACCEPT -m comment --comment db2.kiiiosk.ru"
+      - "iptables -A INPUT -s 94.232.57.6 -j ACCEPT -m comment --comment office.brandymint.ru"
     postgresql_user: wwwkiiiosk
     postgresql_database: kiosk_production
     postgresql_version: 9.6
@@ -34,7 +47,11 @@
 
     postgresql_service_enabled: false # should the service be enabled, default is true
 
-    postgresql_pg_hba_passwd_hosts:
+    postgresql_pg_hba_default:
+      - { type: local, database: all, user: '{{ postgresql_admin_user }}', address: '', method: '{{ postgresql_default_auth_method }}', comment: '' }
+      - { type: local, database: all, user: all, address: '',             method: '{{ postgresql_default_auth_method }}', comment: '"local" is for Unix domain socket connections only' }
+      - { type: host,  database: all, user: all, address: '127.0.0.1/32', method: '{{ postgresql_default_auth_method }}', comment: 'IPv4 local connections:' }
+      - { type: host,  database: all, user: all, address: '::1/128',      method: '{{ postgresql_default_auth_method }}', comment: 'IPv6 local connections:' }
       - { type: local, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '136.243.75.105/32', method: 'md5', comment: 'srv-1.kiiiosk.ru' }
 
     postgresql_user_privileges:

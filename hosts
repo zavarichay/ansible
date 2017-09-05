@@ -1,2 +1,2 @@
 [db]
-db2 ansible_ssh_host=136.243.75.106 remote_user=root
+db2 ansible_ssh_host=db2.kiiiosk.ru remote_user=root
