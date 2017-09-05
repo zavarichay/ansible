@@ -1,0 +1,17 @@
+---
+
+- src: https://github.com/ANXS/postgresql.git
+  version: v1.9.0
+  name: ANXS.postgresql
+
+- src: https://github.com/ANXS/hostname.git
+  version: v1.1.0
+  name: ANXS.hostname
+
+- src: https://github.com/elastic/ansible-elasticsearch.git
+  version: 5.5.1
+  name: ansible-elasticsearch
+
+- src: https://github.com/ANXS/vim.git
+  version: v1.0.2
+  name: ANXS-bim

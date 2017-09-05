@@ -1,0 +1,28 @@
+---
+- hosts: db
+  roles:
+    - ANXS.postgresql
+    - ANXS.hostname
+    - { role: ansible-elasticsearch, es_instance_name: "node1" }
+  become: yes
+  vars:
+    postgresql_user: wwwkiiiosk
+    postgresql_database: kiosk_production
+    postgresql_version: 9.6
+    postgresql_encoding: 'UTF-8'
+    postgresql_locale: 'en_US.UTF-8'
+    postgresql_ctype: 'en_US.UTF-8'
+
+    postgresql_admin_user: "postgres"
+    postgresql_default_auth_method: "trust"
+
+    postgresql_service_enabled: false # should the service be enabled, default is true
+
+    postgresql_pg_hba_passwd_hosts:
+      - { type: local, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '148.251.195.87/32', method: 'md5', comment: '' }
+      - { type: local, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '148.251.195.87/32', method: 'md5', comment: '' }
+
+    postgresql_user_privileges:
+      - name: '{{ postgresql_user }}'
+        db: '{{ postgresql_database }}'
+        priv: "ALL"
