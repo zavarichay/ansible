@@ -1,5 +1,9 @@
 ---
 
+- src: https://github.com/resmo/ansible-role-zabbix-agent.git
+  version: v1.1.0
+  name: zabbix-agent
+
 - src: https://github.com/resmo/ansible-role-ntp.git
   version: 0.4.0
   name: ntp

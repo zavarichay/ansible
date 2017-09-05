@@ -5,6 +5,8 @@
     - Stouts.timezone
     - ntp
 
+  # must be yes for zabbix-agent
+  gather_facts: yes
   vars:
     timezone_enabled: yes 
     timezone_timezone: Europe/Moscow
