@@ -3,17 +3,20 @@
   roles:
     - ANXS.hostname
     - Stouts.timezone
+    - Stouts.iptables
     - ntp
     - flaminem.zabbix-agent
 
   # must be yes for zabbix-agent
   gather_facts: yes
   vars:
+    iptables_allowed_tcp_ports: [22, 80, 443, 9200, 10050]
+
     zabbix_common_config_minor_version: '3.2'
     zabbix_agent_config_server: '94.232.57.6,136.243.75.79,127.0.0.1,148.251.195.87'
     zabbix_agent_config_server_active: '94.232.57.6'
 
-    timezone_enabled: yes 
+    timezone_enabled: yes
     timezone_timezone: Europe/Moscow
 #  tasks:
 #    - raw: which python || apt-get update
@@ -24,17 +27,37 @@
 - hosts: db
   roles:
     - ANXS.postgresql
-    - firewall
     - { role: ansible-elasticsearch, es_instance_name: "node1" }
+    - { role: franklinkim.cron, tags: ['cron'] }
   become: yes
 
   vars:
-    firewall_allowed_tcp_ports: 22
-    firewall_additional_rules:
-      - "iptables -A INPUT -s 136.243.75.105  -j ACCEPT -m comment --comment srv-1.kiiiosk.ru"
-      - "iptables -A INPUT -s 136.243.75.79 -j ACCEPT -m comment --comment db1.kiiiosk.ru"
-      - "iptables -A INPUT -s 136.243.75.106 -j ACCEPT -m comment --comment db2.kiiiosk.ru"
-      - "iptables -A INPUT -s 94.232.57.6 -j ACCEPT -m comment --comment office.brandymint.ru"
+    cron_vars:
+      - name: 'MAILTO'
+        value: "servers@kiiiosk.ru"
+        user: root
+    cron_tasks:
+      - name: vacuumdb
+        hour: 0
+        minute: 47
+        job: /usr/bin/vacuumdb -U postgres -afzv > /var/log/vacuumdb.log 2>&1
+
+    iptables_raw_rules:
+      - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j REJECT --reject-with icmp-port-unreachable"
+      - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -j REJECT --reject-with icmp-port-unreachable"
+      - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,PSH,URG -j REJECT --reject-with icmp-port-unreachable"
+      - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN FIN,SYN -j REJECT --reject-with icmp-port-unreachable"
+      - "-A INPUT -p tcp -m tcp --tcp-flags SYN,RST SYN,RST -j REJECT --reject-with icmp-port-unreachable"
+      - "-A INPUT -p tcp -m tcp --tcp-flags FIN,RST FIN,RST -j REJECT --reject-with icmp-port-unreachable"
+      - "-A INPUT -p tcp -m tcp --tcp-flags FIN,ACK FIN -j REJECT --reject-with icmp-port-unreachable"
+      - "-A INPUT -p tcp -m tcp --tcp-flags PSH,ACK PSH -j REJECT --reject-with icmp-port-unreachable"
+      - "-A INPUT -p tcp -m tcp --tcp-flags ACK,URG URG -j REJECT --reject-with icmp-port-unreachable"
+
+      - "-A INPUT -s 136.243.75.105  -j ACCEPT -m comment --comment srv-1.kiiiosk.ru"
+      - "-A INPUT -s 136.243.75.79 -j ACCEPT -m comment --comment db1.kiiiosk.ru"
+      - "-A INPUT -s 136.243.75.106 -j ACCEPT -m comment --comment db2.kiiiosk.ru"
+      - "-A INPUT -s 94.232.57.6 -j ACCEPT -m comment --comment office.brandymint.ru"
+
     postgresql_user: wwwkiiiosk
     postgresql_database: kiosk_production
     postgresql_version: 9.6
