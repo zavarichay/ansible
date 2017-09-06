@@ -6,10 +6,16 @@
     - Stouts.iptables
     - ntp
     - flaminem.zabbix-agent
+    - franklinkim.cron
 
+  #- set_fact: env_var="{{ lookup('env','ENV_VAR') }}"
   # must be yes for zabbix-agent
   gather_facts: yes
   vars:
+    cron_vars:
+      - name: 'MAILTO'
+        value: "servers@kiiiosk.ru"
+        user: root
     iptables_allowed_tcp_ports: [22, 80, 443, 9200, 10050]
 
     zabbix_common_config_minor_version: '3.2'
@@ -24,18 +30,13 @@
 #    - raw: (which python && which aptitude) || apt-get install -y python python-apt aptitude
 #      tags: install_python
 
-- hosts: db
+- hosts: databases
   roles:
     - ANXS.postgresql
     - { role: ansible-elasticsearch, es_instance_name: "node1" }
-    - { role: franklinkim.cron, tags: ['cron'] }
   become: yes
 
   vars:
-    cron_vars:
-      - name: 'MAILTO'
-        value: "servers@kiiiosk.ru"
-        user: root
     cron_tasks:
       - name: vacuumdb
         hour: 0
@@ -60,6 +61,7 @@
 
     postgresql_user: wwwkiiiosk
     postgresql_database: kiosk_production
+    postgresql_password: "{{ lookup('env','PG_USER_PASSWORD') }}"
     postgresql_version: 9.6
     postgresql_encoding: 'UTF-8'
     postgresql_locale: 'en_US.UTF-8'
@@ -70,12 +72,23 @@
 
     postgresql_service_enabled: false # should the service be enabled, default is true
 
+    postgresql_users:
+      - name: '{{ postgresql_user }}'
+        pass: '{{ postgresql_password }}'
+        encrypted: no       # denotes if the password is already encrypted.
+
+    postgresql_user_privileges:
+      - name: '{{ postgresql_user }}'                   # user name
+        db:   '{{ postgresql_database }}'
+        priv: "ALL"                 # privilege string format: example: INSERT,UPDATE/table:SELECT/anothertable:ALL
+        # role_attr_flags: "CREATEDB" # role attribute flags
+
     postgresql_pg_hba_default:
       - { type: local, database: all, user: '{{ postgresql_admin_user }}', address: '', method: '{{ postgresql_default_auth_method }}', comment: '' }
       - { type: local, database: all, user: all, address: '',             method: '{{ postgresql_default_auth_method }}', comment: '"local" is for Unix domain socket connections only' }
       - { type: host,  database: all, user: all, address: '127.0.0.1/32', method: '{{ postgresql_default_auth_method }}', comment: 'IPv4 local connections:' }
       - { type: host,  database: all, user: all, address: '::1/128',      method: '{{ postgresql_default_auth_method }}', comment: 'IPv6 local connections:' }
-      - { type: local, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '136.243.75.105/32', method: 'md5', comment: 'srv-1.kiiiosk.ru' }
+      - { type: host, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '136.243.75.105/32', method: 'md5', comment: 'srv-1.kiiiosk.ru' }
 
     postgresql_user_privileges:
       - name: '{{ postgresql_user }}'

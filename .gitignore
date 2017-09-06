@@ -1,3 +1,4 @@
+.envrc
 local-configure.yml
 .vagrant/
 docs/_build/
