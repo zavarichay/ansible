@@ -10,7 +10,7 @@ cron_vars:
 zabbix_common_config_minor_version: '3.2'
 zabbix_agent_config_server: '94.232.57.6,136.243.75.79,127.0.0.1,148.251.195.87'
 zabbix_agent_config_server_active: '94.232.57.6'
-zabbix_agent_config_include_confs: ["process", "sockstat", "diskstats", "meminfo", "psql", "nginx"]
+zabbix_agent_config_include_confs: ["process", "sockstat", "diskstats", "meminfo", "psql", "nginx", "memcached", "postfix", "redix", "sidekiq", "smartctl"]
 
 timezone_enabled: yes
 timezone_timezone: Europe/Moscow

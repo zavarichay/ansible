@@ -1,5 +1,8 @@
 ---
 
+- src: https://github.com/debops/ansible-core.git
+  name: core
+
 - src: https://github.com/geerlingguy/ansible-role-git.git
   name: git
   version: 1.4.0

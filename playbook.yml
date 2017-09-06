@@ -1,6 +1,7 @@
 ---
 - hosts: all
   roles:
+    - core
     - vim
     - hostname
     - timezone
@@ -21,6 +22,21 @@
   roles:
     - postgresql
     - elasticsearch
+  tasks:
+    - name: sync zabbix/sudoers
+      tags: sync
+      synchronize:
+        src: files/zabbix/sudoers.d
+        dest: /etc/zabbix/
+        delete: yes
+        recursive: yes
+    - name: sync zabbix/scripts
+      tags: sync
+      synchronize:
+        src: files/zabbix/scripts
+        dest: /etc/zabbix/
+        delete: yes
+        recursive: yes
 
 # TODO
 # write content CONF_DIR=/etc/elasticsearch/node1/ into /etc/default/elasticsearch
