@@ -1,22 +1,26 @@
 ---
 - hosts: all
   roles:
-    - ANXS.hostname
-    - Stouts.timezone
+    - vim
+    - hostname
+    - timezone
     - ntp
-    - flaminem.zabbix-agent
-    - franklinkim.cron
-    - Stouts.iptables
+    - zabbix-agent
+    - cron
+    - iptables
     - common
+    - os-hardening
+    - logrotate
+    - git
 
   # must be yes for zabbix-agent
   gather_facts: yes
-
   become: yes
 
 - hosts: databases
   roles:
-    - ANXS.postgresql
-    - { role: ansible-elasticsearch, es_instance_name: "node1" }
+    - postgresql
+    - elasticsearch
 
-  # write content CONF_DIR=/etc/elasticsearch/node1/ into /etc/default/elasticsearch
+# TODO
+# write content CONF_DIR=/etc/elasticsearch/node1/ into /etc/default/elasticsearch

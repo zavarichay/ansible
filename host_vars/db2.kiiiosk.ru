@@ -19,6 +19,7 @@ iptables_raw_rules:
 
 
 es_version: "5.5.2"
+es_instance_name: "node1"
 es_config:
   network.host: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}" # '136.243.75.106' # db2.kiiiosk.ru
   discovery.zen.ping.unicast.hosts: "localhost:9300"
