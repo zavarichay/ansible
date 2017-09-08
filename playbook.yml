@@ -8,15 +8,12 @@
     - hostname
     - timezone
     - ntp
-    - zabbix-agent
-    - bm-zabbix-agent
     - cron
     - iptables
     - logrotate
     - git
 
-  # must be yes for zabbix-agent
-  gather_facts: yes
   become: yes
 
+- include: zabbix.yml
 - include: databases.yml

@@ -1,4 +1,4 @@
-- hosts: db2.kiiiosk.ru
+- hosts: databases
   roles:
     - postgresql
     - elasticsearch
