@@ -1,0 +1,8 @@
+- hosts: db2.kiiiosk.ru
+  roles:
+    - postgresql
+    - elasticsearch
+    - elastic-hq
+    - nginx
+# TODO
+# write content CONF_DIR=/etc/elasticsearch/node1/ into /etc/default/elasticsearch

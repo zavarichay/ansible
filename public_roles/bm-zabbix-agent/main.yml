@@ -1,0 +1,24 @@
+---
+tasks:
+
+  - name: sync zabbix/sudoers
+    tags:
+      - zabbix
+      - zabbix-agent
+      - zabbix-sync
+    synchronize:
+      src: files/zabbix/sudoers.d
+      dest: /etc/zabbix/
+      delete: yes
+      recursive: yes
+
+  - name: sync zabbix/scripts
+    tags:
+      - zabbix
+      - zabbix-agent
+      - zabbix-sync
+    synchronize:
+      src: files/zabbix/scripts
+      dest: /etc/zabbix/
+      delete: yes
+      recursive: yes

@@ -1,5 +1,9 @@
 ---
 
+- src: jdauphant.nginx
+  name: jdauphant.nginx
+  version: v2.9
+
 - src: https://github.com/debops/ansible-core.git
   name: core
 

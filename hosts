@@ -1,2 +1,7 @@
+[webservers]
+#brandymint.ru
+#srv-1.kiiiosk.ru
+#onelec.ru
+
 [databases]
 db2.kiiiosk.ru ansible_ssh_host=db2.kiiiosk.ru remote_user=root

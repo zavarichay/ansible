@@ -1,16 +1,17 @@
 ---
-- hosts: all
+- hosts: all-fake
   roles:
     - core
+    - common
+    - os-hardening
     - vim
     - hostname
     - timezone
     - ntp
     - zabbix-agent
+    - bm-zabbix-agent
     - cron
     - iptables
-    - common
-    - os-hardening
     - logrotate
     - git
 
@@ -18,25 +19,4 @@
   gather_facts: yes
   become: yes
 
-- hosts: databases
-  roles:
-    - postgresql
-    - elasticsearch
-  tasks:
-    - name: sync zabbix/sudoers
-      tags: sync
-      synchronize:
-        src: files/zabbix/sudoers.d
-        dest: /etc/zabbix/
-        delete: yes
-        recursive: yes
-    - name: sync zabbix/scripts
-      tags: sync
-      synchronize:
-        src: files/zabbix/scripts
-        dest: /etc/zabbix/
-        delete: yes
-        recursive: yes
-
-# TODO
-# write content CONF_DIR=/etc/elasticsearch/node1/ into /etc/default/elasticsearch
+- include: databases.yml

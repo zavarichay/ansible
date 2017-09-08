@@ -1,0 +1,11 @@
+---
+
+# Сразу смотрим, чтобы у нас не было юзера по умолчанию.
+# Иначе нас поимеют за 5 минут.
+- name: clone elastic-hq
+  become_user: www-data
+  tags:
+    - elastic-hq
+  git:
+    repo: https://github.com/royrusso/elasticsearch-HQ.git
+    dest: "{{ hq_www_dir }}"
