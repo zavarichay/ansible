@@ -34,7 +34,7 @@ es_config:
 es_plugins:
   - plugin: analysis-morphology
 
-cron_tasks:
+cron:
   - name: vacuumdb
     hour: 0
     minute: 47
