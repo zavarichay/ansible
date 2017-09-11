@@ -10,3 +10,4 @@
   become: yes
   vars:
     zabbix_agent_pkg_state: latest
+    zabbix_common_apt_repository: "deb http://repo.zabbix.com/zabbix/{{ zabbix_common_config_minor_version }}/{{ ansible_distribution|lower }} xenial main contrib non-free"

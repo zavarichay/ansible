@@ -7,8 +7,8 @@ tasks:
       - zabbix-agent
       - zabbix-sync
     synchronize:
-      src: files/zabbix/sudoers.d
-      dest: /etc/zabbix/
+      src: files/zabbix/sudoers.d/zabbix
+      dest: /etc/sudoers.d/
       delete: yes
       recursive: yes
 

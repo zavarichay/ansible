@@ -1,0 +1,16 @@
+---
+- hosts: all
+  roles:
+    - core
+    - common
+    - os-hardening
+    - vim
+    - hostname
+    - timezone
+    - ntp
+    - cron
+    - iptables
+    - logrotate
+    - git
+
+  become: yes

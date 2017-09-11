@@ -32,7 +32,7 @@ es_config:
   http.port: 9200
   transport.tcp.port: 9300
 es_plugins:
-  - plugin: analysis-morphology
+  - plugin: http://dl.bintray.com/content/imotov/elasticsearch-plugins/org/elasticsearch/elasticsearch-analysis-morphology/5.5.2/elasticsearch-analysis-morphology-5.5.2.zip
 
 cron:
   - name: vacuumdb
@@ -57,6 +57,10 @@ postgresql_users:
   - name: '{{ postgresql_user }}'
     pass: '{{ postgresql_password }}'
     encrypted: no       # denotes if the password is already encrypted.
+
+postgresql_databases:
+  - name:   '{{ postgresql_database }}'
+    owner: postgres
 
 postgresql_user_privileges:
   - name: '{{ postgresql_user }}'                   # user name

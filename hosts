@@ -3,5 +3,9 @@ brandymint.ru
 onelec.ru
 srv-1.kiiiosk.ru
 
+[kiosk]
+srv-1.kiiiosk.ru
+db2.kiiiosk.ru
+
 [databases]
-db2.kiiiosk.ru ansible_ssh_host=db2.kiiiosk.ru remote_user=root
+db2.kiiiosk.ru

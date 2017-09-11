@@ -2,7 +2,7 @@
   roles:
     - postgresql
     - elasticsearch
-    - elastic-hq
     - nginx
+    - elastic-hq
 # TODO
 # write content CONF_DIR=/etc/elasticsearch/node1/ into /etc/default/elasticsearch

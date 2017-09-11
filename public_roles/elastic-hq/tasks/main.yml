@@ -3,6 +3,7 @@
 # Сразу смотрим, чтобы у нас не было юзера по умолчанию.
 # Иначе нас поимеют за 5 минут.
 - name: clone elastic-hq
+  become: yes
   become_user: www-data
   tags:
     - elastic-hq
