@@ -1,0 +1,25 @@
+---
+
+- name: sync zabbix/sudoers
+  become: yes
+  become_user: root
+  tags:
+    - zabbix
+    - zabbix-agent
+    - zabbix-sync
+  synchronize:
+    src: files/sudoers.d/
+    dest: /etc/sudoers.d/
+    perms: yes
+    owner: no
+
+- name: sync zabbix/scripts
+  tags:
+    - zabbix
+    - zabbix-agent
+    - zabbix-sync
+  synchronize:
+    src: files/zabbix/scripts
+    dest: /etc/zabbix/
+    delete: yes
+    recursive: yes

@@ -6,7 +6,6 @@
 
   # must be yes for zabbix-agent
   gather_facts: yes
-
   become: yes
   vars:
     zabbix_agent_pkg_state: latest
