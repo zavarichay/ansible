@@ -2,3 +2,6 @@ Defaults:zabbix !requiretty
 Cmnd_Alias ZABBIX_CMD = /etc/zabbix/scripts/smartctl-lld.py
 zabbix   ALL = (other_user)  NOPASSWD: ALL
 zabbix   ALL = (root)        NOPASSWD: ZABBIX_CMD
+
+# https://github.com/v-zhuravlev/zbx-smartctl
+zabbix   ALL = (ALL) NOPASSWD: /usr/sbin/smartctl,/etc/zabbix/scripts/smartctl-disks-discovery.pl

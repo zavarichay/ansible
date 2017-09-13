@@ -1,5 +1,8 @@
 ---
 
+- src: https://github.com/grimmjow8/ansible-smartmontools.git
+  name: grimmjow8.ansible-smartmontools
+
 - src: jdauphant.nginx
   name: jdauphant.nginx
   version: v2.9
