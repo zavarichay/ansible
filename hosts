@@ -14,8 +14,7 @@ db2.kiiiosk.ru
 [postgresql]
 onelec.ru
 db1.kiiiosk.ru
+srv-1.kiiiosk.ru
 
 [elastic]
 srv-1.kiiiosk.ru
-db1.kiiiosk.ru
-db2.kiiiosk.ru
