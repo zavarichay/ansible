@@ -18,10 +18,7 @@
   with_items:
     - "{{locales}}"
 
-- name: set vm.swappiness
-  sysctl:
-    name: vm.swappiness
-    value: 1
-    sysctl_set: yes
-    state: present
-    reload: yes
+- name: Disable swap
+  include: swapoff.yml
+  tags: configure
+  when: disable_swap

@@ -14,12 +14,14 @@ iptables_raw_rules:
   - "-A INPUT -p tcp -m tcp --tcp-flags ACK,URG URG -j REJECT --reject-with icmp-port-unreachable"
   - "-A INPUT -s 136.243.75.105  -j ACCEPT -m comment --comment srv-1.kiiiosk.ru"
   - "-A INPUT -s 136.243.75.79 -j ACCEPT -m comment --comment db1.kiiiosk.ru"
-  - "-A INPUT -s 136.243.75.106 -j ACCEPT -m comment --comment db2.kiiiosk.ru"
+  - "-A INPUT -s 136.243.75.107 -j ACCEPT -m comment --comment db2.kiiiosk.ru"
   - "-A INPUT -s 94.232.57.6 -j ACCEPT -m comment --comment office.brandymint.ru"
 
 locales:
   - ru_RU.UTF-8
   - en_US.UTF-8
+
+disable_swap: true
 
 cron_vars:
   - name: 'MAILTO'
