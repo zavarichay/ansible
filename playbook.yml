@@ -1,4 +1,4 @@
 ---
 - include: core.yml
-- include: zabbix.yml
-- include: databases.yml
+- include: monitoring.yml
+- include: postgresql.yml

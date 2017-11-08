@@ -1,5 +1,8 @@
 ---
 
+- src: franklinkim.cron
+  name: cron
+
 - src: https://github.com/grimmjow8/ansible-smartmontools.git
   name: ansible-smartmontools
 

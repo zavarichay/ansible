@@ -1,4 +1,4 @@
-all : galaxy setup play
+all : galaxy
 
 play :
 	ansible-playbook ./playbook.yml
@@ -9,6 +9,6 @@ galaxy :
 ping :
 	ansible -m ping all
 
-# Заменить на ansible -m setup
-setup :
-	ssh root@db2.kiiiosk.ru "which ansible || (sudo apt-get update && sudo apt-get install -y software-properties-common && sudo apt-add-repository ppa:ansible/ansible && sudo apt-get update && sudo apt-get install -y ansible)"
+install :
+	ssh root@${SETUP_HOST} "which ansible || (sudo apt-get update && sudo apt-get install -y software-properties-common && sudo apt-add-repository ppa:ansible/ansible && sudo apt-get update && sudo apt-get install -y ansible)"
+
