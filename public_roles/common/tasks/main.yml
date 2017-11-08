@@ -17,8 +17,3 @@
     name: "{{item}}"
   with_items:
     - "{{locales}}"
-
-- name: Disable swap
-  include: swapoff.yml
-  tags: configure
-  when: disable_swap
