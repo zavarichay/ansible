@@ -1,7 +1,10 @@
 ---
+# https://github.com/v-zhuravlev/zbx-smartctl
 - hosts: all
   roles:
-    - yarn
+    - zabbix-agent
+    - bm-zabbix-agent
+    - ansible-smartmontools
     - core
     - common
     - os-hardening
@@ -9,9 +12,10 @@
     - hostname
     - timezone
     - ntp
-    - cron
     - iptables
     - logrotate
     - git
 
+  # must be yes for zabbix-agent
+  gather_facts: yes
   become: yes

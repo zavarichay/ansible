@@ -10,9 +10,6 @@
   name: jdauphant.nginx
   version: v2.9
 
-- src: franklinkim.cron
-  name: cron
-
 - src: https://github.com/debops/ansible-core.git
   name: core
 

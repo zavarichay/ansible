@@ -1,0 +1,7 @@
+---
+- hosts: all
+  roles:
+    - yarn
+
+  gather_facts: yes
+  become: yes

@@ -1,12 +1,7 @@
-cron:
-  - name: vacuumdb
-    hour: 2
-    minute: 18
-    job: /usr/bin/vacuumdb -U postgres -afzv > /var/log/vacuumdb.log 2>&1
-
 postgresql_user: wwwkiiiosk
 postgresql_database: wwwkiosk
 postgresql_password: "{{ lookup('env','PG_USER_PASSWORD') }}"
+
 postgresql_version: 9.6
 postgresql_encoding: 'UTF-8'
 postgresql_locale: 'en_US.UTF-8'

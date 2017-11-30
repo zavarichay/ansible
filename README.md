@@ -2,7 +2,7 @@
 
 ## Подготовка
 
-PG_USER_PASSWORD
+Установть пароль для wwwkiosk в PG_USER_PASSWORD
 
 ## Установка ansbile локально
 
