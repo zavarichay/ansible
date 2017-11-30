@@ -3,18 +3,16 @@ brandymint.ru
 onelec.ru
 srv-1.kiiiosk.ru
 db1.kiiiosk.ru
-db2.kiiiosk.ru ansible_host=136.243.75.107
+db2.kiiiosk.ru
 office.brandymint.ru ansible_ssh_port=2222
 
 [kiosk]
 srv-1.kiiiosk.ru
-db1.kiiiosk.ru
-db2.kiiiosk.ru ansible_host=136.243.75.107
+db2.kiiiosk.ru
 
 [postgresql]
 onelec.ru
-db1.kiiiosk.ru
-db2.kiiiosk.ru ansible_host=136.243.75.107
+db2.kiiiosk.ru
 srv-1.kiiiosk.ru
 
 [elastic]

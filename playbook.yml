@@ -1,4 +1,4 @@
 ---
-- include: core.yml
-- include: monitoring.yml
-- include: postgresql.yml
+- include_tasks: core.yml
+- include_tasks: monitoring.yml
+- include_tasks: postgresql.yml

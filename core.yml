@@ -1,6 +1,7 @@
 ---
 - hosts: all
   roles:
+    - yarn
     - core
     - common
     - os-hardening

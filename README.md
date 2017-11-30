@@ -21,4 +21,4 @@ PG_USER_PASSWORD
 
 > SETUP_HOST=host_name make install
 > ansible -m setup host_name
-> ansible-playbook ./playbook.yml --limit host_name
+> ansible-playbook ./playbook.yml --limit host_name -i ./hosts

@@ -1,5 +1,8 @@
 ---
 
+- src: https://github.com/Oefenweb/ansible-yarn.git
+  name: yarn
+
 - src: https://github.com/grimmjow8/ansible-smartmontools.git
   name: ansible-smartmontools
 
@@ -7,7 +10,9 @@
   name: jdauphant.nginx
   version: v2.9
 
-# - src: franklinkim.cron
+- src: franklinkim.cron
+  name: cron
+
 - src: https://github.com/debops/ansible-core.git
   name: core
 
