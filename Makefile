@@ -1,7 +1,7 @@
 all : galaxy
 
 play :
-	ansible-playbook ./playbook.yml
+	ansible-playbook ./playbook.yml -i hosts
 
 galaxy :
 	ansible-galaxy install -p roles -r requirements.yml --ignore-errors

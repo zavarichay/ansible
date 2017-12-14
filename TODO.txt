@@ -1,2 +1,0 @@
-https://discuss.elastic.co/t/total-fields-limit-setting/53004/6
-curl -XPUT db2.kiiiosk.ru:9200/kiiiosk_goods/_settings -d '{"mapping.total_fields.limit" : 3000}'
