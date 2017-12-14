@@ -1,12 +1,14 @@
-- hosts: postgresql
-  roles:
-    - postgresql
-    - swap
+- hosts: db2.kiiiosk.ru
   tasks:
     - fail:
         msg: "Должен быть пароль в PG_USER_PASSWORD"
       when: postgresql_password == ""
 
+- hosts: postgresql
+  roles:
+    - postgresql
+    - swap
+  tasks:
     - cronvar:
         name: EMAIL
         value: "servers@brandymint.ru"
