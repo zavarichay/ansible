@@ -1,4 +1,4 @@
-iptables_allowed_tcp_ports: [21, 22, 25, 80, 443, 3000, 9000, 10050]
+iptables_allowed_tcp_ports: [20, 21, 22, 25, 80, 443, 3000, 9000, 10050]
 
 postgresql_version: 9.6
 postgresql_encoding: 'UTF-8'
