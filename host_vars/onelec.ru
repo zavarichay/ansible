@@ -28,3 +28,19 @@ postgresql_pg_hba_default:
   - { type: local, database: all, user: all, address: '',             method: '{{ postgresql_default_auth_method }}', comment: '"local" is for Unix domain socket connections only' }
   - { type: host, database: all, user: all, address: '127.0.0.1/32', method: '{{ postgresql_default_auth_method }}', comment: 'IPv4 local connections:' }
   - { type: host, database: all, user: all, address: '::1/128',      method: '{{ postgresql_default_auth_method }}', comment: 'IPv6 local connections:' }
+
+iptables_raw_rules:
+  - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,SYN,RST,PSH,ACK,URG -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG FIN,PSH,URG -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN FIN,SYN -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -p tcp -m tcp --tcp-flags SYN,RST SYN,RST -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -p tcp -m tcp --tcp-flags FIN,RST FIN,RST -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -p tcp -m tcp --tcp-flags FIN,ACK FIN -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -p tcp -m tcp --tcp-flags PSH,ACK PSH -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -p tcp -m tcp --tcp-flags ACK,URG URG -j REJECT --reject-with icmp-port-unreachable"
+  - "-A INPUT -s 136.243.75.105  -j ACCEPT -m comment --comment srv-1.kiiiosk.ru"
+  - "-A INPUT -s 136.243.75.79 -j ACCEPT -m comment --comment db1.kiiiosk.ru"
+  - "-A INPUT -s 136.243.75.107 -j ACCEPT -m comment --comment db2.kiiiosk.ru"
+  - "-A INPUT -s 94.232.57.6 -j ACCEPT -m comment --comment office.brandymint.ru"
+  - "-A INPUT -p tcp --dport 50000:60000 -m state --state RELATED,ESTABLISHED -j ACCEPT"
