@@ -16,6 +16,11 @@
 
 > ansible-playbook playbook.yml -i hosts --limit onelec.ru
 
+## Сухая попытка настроить (показывает что изменится, но реальных изменений не
+делает)
+
+> ansible-playbook playbook.yml -i hosts --limit onelec.ru -CD
+
 ## Настроить все сервера
 
 > make play
