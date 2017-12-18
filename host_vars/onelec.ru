@@ -42,5 +42,4 @@ iptables_raw_rules:
   - "-A INPUT -s 136.243.75.105  -j ACCEPT -m comment --comment srv-1.kiiiosk.ru"
   - "-A INPUT -s 136.243.75.79 -j ACCEPT -m comment --comment db1.kiiiosk.ru"
   - "-A INPUT -s 136.243.75.107 -j ACCEPT -m comment --comment db2.kiiiosk.ru"
-  - "-A INPUT -s 94.232.57.6 -j ACCEPT -m comment --comment office.brandymint.ru"
   - "-A INPUT -p tcp --dport 50000:60000 -m state --state RELATED,ESTABLISHED -j ACCEPT"
