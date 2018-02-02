@@ -30,3 +30,11 @@
       modprobe: name=ip_conntrack_ftp
       tags:
         - ftp
+
+    - name: Sudo without password for wwwonelec
+      lineinfile:
+        dest: /etc/sudoers
+        state: present
+        regexp: '^wwwonelec'
+        line: 'wwwonelec ALL=(ALL) NOPASSWD: ALL'
+        validate: 'visudo -cf %s'
