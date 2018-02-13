@@ -1,5 +1,8 @@
 ---
 
+- src: https://github.com/BrandyMint/ansible-zabbix-agent.git
+  name: bm-zabbix-agent
+
 - src: https://github.com/Oefenweb/ansible-yarn.git
   name: yarn
 
