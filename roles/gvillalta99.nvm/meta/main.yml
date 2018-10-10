@@ -1,0 +1,16 @@
+---
+galaxy_info:
+  author: gvillalta99
+  description: Nvm installation role
+  license: BSD
+  min_ansible_version: 1.9
+  platforms:
+  - name: Fedora
+    versions:
+      - 21
+  - name: Ubuntu
+    versions:
+      - trusty
+  categories:
+    - development
+dependencies: []

@@ -1,0 +1,26 @@
+---
+- name: Install dependencies
+  action: "{{ ansible_pkg_mgr }} name={{ item }} state=present"
+  with_items: "{{ nvm.dependencies[ansible_pkg_mgr] }}"
+
+- name: Check for nvm
+  stat:
+    path: "{{ nvm.path }}"
+  register: nvm_path
+
+- name: Install nvm
+  git:
+    repo: https://github.com/creationix/nvm.git
+    dest: "{{ nvm.path }}"
+    version: "{{ nvm.version }}"
+    accept_hostkey: true
+  when: not nvm_path.stat.exists
+
+- name: Source nvm
+  lineinfile:
+    dest: "{{ nvm.profile_file }}"
+    line: "source {{ nvm.path }}/nvm.sh"
+
+- name: Install nodes
+  shell: ". {{ nvm.path}}/nvm.sh && nvm install {{ item }}"
+  with_items: "{{ nvm.node_versions }}"

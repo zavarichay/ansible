@@ -1,0 +1,5 @@
+---
+# vars file for ansible-smartmontools
+__smartd_basename: smartd.conf
+__smartd_cfg_file: "/etc/{{__smartd_basename}}"
+__smartd_bkup_cfg_file: "{{__smartd_cfg_file}}.org"

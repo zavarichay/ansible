@@ -1,0 +1,8 @@
+# vim:ft=ansible:
+---
+- hosts: all
+  roles:
+    - yarn
+    - nvm
+
+  # TODO install to $HOME/.profile

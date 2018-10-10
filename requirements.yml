@@ -1,7 +1,13 @@
 ---
 
+- src: https://github.com/zzet/ansible-rbenv-role.git
+  name: rbenv
+
 - src: https://github.com/BrandyMint/ansible-zabbix-agent.git
   name: bm-zabbix-agent
+
+- src: https://github.com/tepez/ansible-role-nvm.git
+  name: nvm
 
 - src: https://github.com/Oefenweb/ansible-yarn.git
   name: yarn
@@ -9,9 +15,9 @@
 - src: https://github.com/grimmjow8/ansible-smartmontools.git
   name: ansible-smartmontools
 
-- src: jdauphant.nginx
+- src: https://github.com/rhpvorderman/ansible-role-nginx.git
   name: jdauphant.nginx
-  version: v2.9
+  version: ansible24
 
 - src: https://github.com/debops/ansible-core.git
   name: core

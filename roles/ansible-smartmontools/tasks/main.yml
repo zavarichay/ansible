@@ -1,0 +1,25 @@
+---
+# tasks file for ansible-smartmontools
+
+# include variable configuration
+- name: include variables
+  include_vars: main.yml
+
+- fail: msg="variable '{{ item }}' not defined"
+  when: item not in vars
+  with_items:
+     - __smartd_email
+
+- name: install smartmontools
+  apt: name={{item}} state=present
+  with_items:
+    - smartmontools
+
+- name: copy smartd.conf configuration
+  template:
+    src:    "{{__smartd_basename}}"
+    dest:   "{{__smartd_cfg_file}}"
+    backup: yes
+    # owner: "{{whoami}}"
+    # group: "{{whoami}}"
+    # mode:  0644

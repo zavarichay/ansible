@@ -1,0 +1,7 @@
+---
+- name: Install default packages
+  npm:
+    name: "{{ item }}"
+    global: yes
+    executable: "{{ nvm.path }}/{{ nvm_node_version.stdout }}/bin/npm"
+  with_items: "{{ nvm.packages }}"

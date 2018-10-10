@@ -1,0 +1,24 @@
+# vim:ft=ansible:
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  pre_tasks:
+    - name: Install apt libssl for rbenv
+      apt: name={{item}} state=installed
+      with_items:
+        - libssl-dev
+        - libreadline-dev
+        - build-essential 
+        - patch 
+        - ruby-dev 
+        - zlib1g-dev 
+        - liblzma-dev
+        - libffi-dev 
+        - git
+        - libpq-dev
+      tags:
+        - ruby
+  roles:
+    - rbenv
+    - direnv

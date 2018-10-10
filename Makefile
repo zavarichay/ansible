@@ -4,7 +4,7 @@ play :
 	ansible-playbook ./playbook.yml -i hosts
 
 galaxy :
-	ansible-galaxy install -p roles -r requirements.yml --ignore-errors
+	ansible-galaxy install -r requirements.yml --ignore-errors
 
 ping :
 	ansible -m ping all

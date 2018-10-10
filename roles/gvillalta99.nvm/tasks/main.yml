@@ -1,0 +1,4 @@
+---
+- include: setup.yml
+- include: node.yml
+- include: npm.yml

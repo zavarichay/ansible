@@ -2,7 +2,6 @@
 local-configure.yml
 .vagrant/
 docs/_build/
-roles/*
 .fact_caching/
 ._*
 bin/

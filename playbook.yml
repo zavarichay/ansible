@@ -1,4 +1,49 @@
+# vim:ft=ansible:
 ---
-- import_playbook: core.yml
-- import_playbook: web.yml
-- import_playbook: postgresql.yml
+- import_playbook: nginx.yml
+- import_playbook: ruby.yml
+- hosts: all
+  become: yes
+  become_user: root
+  roles:
+    - yarn
+    - nvm
+    - core
+    - common
+    - logrotate
+    - timezone
+    - vim
+    - ntp
+    - users
+
+  tasks:
+    - name: Create app directories
+      become: yes
+      become_user: "{{ app_user }}"
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: 0775
+      with_items:
+        - "{{ app_shared_path }}"
+        - "{{ app_shared_path }}/log"
+        - "{{ app_shared_path }}/config"
+
+    - name: Create shared/database.yml
+      become: yes
+      become_user: "{{ app_user }}"
+      tags:
+        - database
+      blockinfile:
+        path: '{{ app_shared_path }}/config/database.yml'
+        create: true
+        mode: 0600
+        block: |
+          production:
+            adapter: postgresql
+            database: {{ app_db_name }}
+            username: {{ app_db_user }}
+            password: {{ app_db_password }}
+            reconnect: true
+            encoding: unicode
+            pool: {{ app_db_pool }}

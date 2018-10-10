@@ -1,0 +1,22 @@
+---
+nvm:
+  default_node_version: "0.12"
+  dependencies:
+    apt:
+      - git
+      - curl
+      - build-essential
+      - libssl-dev
+    yum:
+      - git
+      - gcc
+      - gcc-c++
+      - make
+      - openssl-devel
+      - libselinux-python
+  node_versions:
+    - "0.12"
+  packages: []
+  path: "{{ ansible_user_dir }}/.nvm"
+  profile_file: "~/.profile"
+  version: "v0.20.0"

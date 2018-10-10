@@ -18,23 +18,3 @@
   # must be yes for zabbix-agent
   gather_facts: yes
   become: yes
-
-- hosts: onelec.ru
-  tasks:
-    - name: Load ip_conntrack_ftp module at boot time
-      lineinfile: dest=/etc/modules line="ip_conntrack_ftp"
-      tags:
-        - ftp
-
-    - name: Load ip_conntrack_ftp module
-      modprobe: name=ip_conntrack_ftp
-      tags:
-        - ftp
-
-    - name: Sudo without password for wwwonelec
-      lineinfile:
-        dest: /etc/sudoers
-        state: present
-        regexp: '^wwwonelec'
-        line: 'wwwonelec ALL=(ALL) NOPASSWD: ALL'
-        validate: 'visudo -cf %s'
