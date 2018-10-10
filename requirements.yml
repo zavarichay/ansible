@@ -54,8 +54,8 @@
   version: v1.1.0
   name: hostname
 
+# ansible-galaxy install elastic.elasticsearch
 - src: https://github.com/elastic/ansible-elasticsearch.git
-  version: 5.5.1
   name: elasticsearch
 
 - src: https://github.com/ANXS/vim.git

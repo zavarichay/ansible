@@ -52,3 +52,6 @@ postgresql_default_auth_method: "trust"
 postgresql_service_enabled: true # should the service be enabled, default is true
 
 postgresql_listen_addresses: '127.0.0.1'
+
+
+
