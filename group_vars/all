@@ -39,3 +39,16 @@ zabbix_agent_config_include_confs: ["process", "sockstat", "diskstats", "meminfo
 
 zabbix_agent_pkg_state: latest
 zabbix_common_apt_repository: "deb http://repo.zabbix.com/zabbix/{{ zabbix_common_config_minor_version }}/{{ ansible_distribution|lower }} xenial main contrib non-free"
+
+
+postgresql_version: 10
+postgresql_encoding: 'UTF-8'
+postgresql_locale: 'en_US.UTF-8'
+postgresql_ctype: 'en_US.UTF-8'
+
+postgresql_admin_user: "postgres"
+postgresql_default_auth_method: "trust"
+
+postgresql_service_enabled: true # should the service be enabled, default is true
+
+postgresql_listen_addresses: '127.0.0.1'
