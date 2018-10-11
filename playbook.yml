@@ -2,10 +2,13 @@
 ---
 - import_playbook: nginx.yml
 - import_playbook: ruby.yml
+- import_playbook: geoip.yml
 - hosts: all
+  gather_facts: yes
   become: yes
   become_user: root
   roles:
+    - redis
     - yarn
     - nvm
     - core

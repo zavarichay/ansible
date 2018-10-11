@@ -1,0 +1,10 @@
+[Unit]
+Description=Photo thumbnail service
+After=syslog.target network.target 
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/thumbor -p 8881 -c /etc/thumbor.conf
+
+[Install]
+WantedBy=default.target

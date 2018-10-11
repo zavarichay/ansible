@@ -1,0 +1,14 @@
+# vim:ft=ansible:
+---
+- hosts: all
+  roles:
+    - geoip
+  tasks:
+    - name: chmod GeoIP data dir
+      file:
+        path: /usr/share/GeoIP/
+        mode: 0755
+    - name: chmod GeoLiteCity
+      file:
+        path: /usr/share/GeoIP/GeoLiteCity.dat
+        mode: 0644

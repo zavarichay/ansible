@@ -1,7 +1,7 @@
 app_user: wwwkiiiosk
 app_site_name: kiiiosk.ru
 app_db_name: wwwkiosk
-app_db_password: FGFgdfFFfdg
+app_db_password: "{{ lookup('env','PG_USER_PASSWORD') }}"
 app_db_pool: 100
 
 postgresql_user: wwwkiiiosk

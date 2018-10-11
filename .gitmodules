@@ -1,0 +1,3 @@
+[submodule "roles/thumbor"]
+	path = roles/thumbor
+	url = git@github.com:mediapeers/ansible-role-thumbor.git
