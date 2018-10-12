@@ -20,10 +20,6 @@
 - src: https://github.com/grimmjow8/ansible-smartmontools.git
   name: ansible-smartmontools
 
-- src: https://github.com/rhpvorderman/ansible-role-nginx.git
-  name: jdauphant.nginx
-  version: ansible24
-
 - src: https://github.com/debops/ansible-core.git
   name: core
 

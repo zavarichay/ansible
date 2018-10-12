@@ -1,31 +1,14 @@
 # vim:ft=ansible:
 ---
 - hosts: all
-  vars:
-    certs_dir: files/{{app_site_name}}/certs/
-  roles:
-    - jdauphant.nginx
   tasks:
-    - name: Ansible check directory exists example.
-      stat:
-        path: "{{ certs_dir }}"
-      when: app_site_name is defined
-      register: app_certs_dir
+    - name: Synchronize nginx configs
+      synchronize:
+        src: files/nginx
+        dest: /etc
 
-    - name: Copy ssl-certs to nginx
-      copy:
-        owner: root
-        src: "{{ certs_dir }}"
-        dest: /etc/ssl/
-      when: app_site_name is defined and app_certs_dir.stat.exists and files_to_delete.stat.isdir
-
-    - name: Copy snippets to nginx
-      copy:
-        owner: root
-        src: files/nginx/snippets/
-        dest: /etc/nginx/snippets/
-
-    - name: Remove redundant default filt
-      file:
-        path: /etc/nginx/sites-available/default
-        state: absent
+  handlers:
+    - name: reload nginx
+      service:
+        name: nginx
+        state: reloaded

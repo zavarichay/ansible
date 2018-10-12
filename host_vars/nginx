@@ -1,0 +1,74 @@
+nginx_configs:
+  proxy:
+    - proxy_set_header Host $http_host
+    - proxy_set_header X-Real-IP  $remote_addr
+    - proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for
+    - proxy_set_header X-Forwarded-Proto $scheme
+  upstream:
+    - upstream thumbor {
+      server 127.0.0.1:8881 weight=5 fail_timeout=30;
+      server 127.0.0.1:8882 weight=5 fail_timeout=30;
+      server 127.0.0.1:8883 weight=5 fail_timeout=30;
+    }
+    #- upstream puma_aml_staging { server unix:/home/www/aml.staging/shared/tmp/sockets/puma.sock fail_timeout=0; }
+    #- upstream puma_operator_front_staging { server unix:/home/www/operator-front-app.staging/shared/tmp/sockets/puma.sock fail_timeout=0; }
+
+  connection_upgrade:
+    - map $http_upgrade $connection_upgrade {
+      default upgrade;
+      ''      '';
+     }
+
+nginx_remove_default_vhost: true
+nginx_sites:
+  thumbor9.kiiiosk.ru:
+    - server_name thumbor9.kiiiosk.ru
+    - root /home/www/operator-front-app.staging/current/public
+    - listen 80
+    - proxy_read_timeout 120
+    - proxy_connect_timeout 240
+    - client_max_body_size 0
+    - access_log /var/log/nginx/operator.stage.access.log combined
+    - error_log /var/log/nginx/operator.stage.error.log notice
+    - location ^~ /assets/ { gzip_static on; expires max; add_header Cache-Control public; }
+    - location ^~ /uploads/ { gzip_static on; expires max; add_header Cache-Control public; }
+    - location = /50x.html { root html; }
+    - location = /404.html { root html; }
+    - location / { try_files $uri @proxy; }
+    - location @proxy {
+        proxy_pass http://puma_operator_front_staging;
+        proxy_http_version  1.1;
+        proxy_headers_hash_bucket_size 128;
+        proxy_set_header    X-Forwarded-For $remote_addr;
+        proxy_set_header    Host $server_name:$server_port;
+        proxy_set_header    Upgrade $http_upgrade;
+        proxy_set_header    Connection $connection_upgrade;
+      }
+  aml.stage.bang8.ru:
+    - server_name aml.stage.bang8.ru
+    - 'root {{ app_root }}/public'
+    - listen 80
+    - proxy_read_timeout 120
+    - proxy_connect_timeout 240
+    - client_max_body_size 0
+    - access_log /var/log/nginx/aml.stage.access.log combined
+    - error_log /var/log/nginx/aml.stage.error.log notice
+    - location ^~ /assets/ { gzip_static on; expires max; add_header Cache-Control public; }
+    - location ^~ /uploads/ { gzip_static on; expires max; add_header Cache-Control public; }
+    - location = /50x.html {
+      root html;
+      }
+    - location = /404.html {
+      root html;
+      }
+    - location / {
+        proxy_pass http://puma_aml_staging;
+        proxy_http_version  1.1;
+        proxy_headers_hash_bucket_size 128;
+        proxy_set_header    X-Forwarded-For $remote_addr;
+        proxy_set_header    Host $server_name:$server_port;
+        proxy_set_header    Upgrade $http_upgrade;
+        proxy_set_header    Connection $connection_upgrade;
+      }
+
+
