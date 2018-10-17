@@ -53,3 +53,14 @@ postgresql_pg_hba_default:
   - { type: host, database: all, user: all, address: '::1/128',      method: '{{ postgresql_default_auth_method }}', comment: 'IPv6 local connections:' }
   - { type: host, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '136.243.75.105/32', method: 'md5', comment: 'srv-1.kiiiosk.ru' }
   - { type: host, database: '{{ postgresql_database }}', user: '{{ postgresql_user }}', address: '136.243.75.79/32', method: 'md5', comment: 'db1.kiiiosk.ru' }
+
+
+# elasticsearch
+#
+es_major_version: '5.x'
+es_version: "5.6.12"
+es_instance_name: "node1"
+es_enable_xpack: false
+es_plugins:
+  - plugin: "http://dl.bintray.com/content/imotov/elasticsearch-plugins/org/elasticsearch/elasticsearch-analysis-morphology/{{ es_version }}/elasticsearch-analysis-morphology-{{ es_version }}.zip"
+
