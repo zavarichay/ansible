@@ -1,0 +1,19 @@
+# vim:ft=ansible:
+---
+- hosts: bitcoin
+  tasks:
+    - name: apt repo bitcoin
+      apt_repository:
+        repo: ppa:bitcoin/bitcoin
+        state: present
+        update_cache: true
+
+    - name: install | dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - bitcoin-qt
+        - bitcoind
+      tags:
+        - bitcoin

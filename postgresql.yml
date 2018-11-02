@@ -1,20 +1,3 @@
-- hosts: db2.kiiiosk.ru
-  tasks:
-    - fail:
-        msg: "Должен быть пароль в PG_USER_PASSWORD"
-      when: postgresql_password == ""
-
-- hosts: postgresql
+- hosts: srv2,db2.kiiiosk.ru,brandymint
   roles:
     - postgresql
-    - swap
-  tasks:
-    - cronvar:
-        name: EMAIL
-        value: "servers@brandymint.ru"
-    - cron:
-        name: vacuumdb
-        hour: 3
-        minute: 18
-        job: /usr/bin/vacuumdb -U postgres -afzv > /var/log/vacuumdb.log 2>&1
-

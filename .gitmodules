@@ -1,3 +1,9 @@
 [submodule "files/nginx"]
 	path = files/nginx
 	url = git@github.com:BrandyMint/kiosk-nginx.git
+[submodule "roles/monit"]
+	path = roles/monit
+	url = git@github.com:pgolm/ansible-role-monit.git
+[submodule "roles/postgresql"]
+	path = roles/postgresql
+	url = https://github.com/WolfgangPecho/postgresql.git

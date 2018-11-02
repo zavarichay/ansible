@@ -53,10 +53,6 @@
   version: 2.2.0
   name: timezone
 
-- src: https://github.com/ANXS/postgresql.git
-  version: v1.9.0
-  name: postgresql
-
 - src: https://github.com/ANXS/hostname.git
   version: v1.1.0
   name: hostname

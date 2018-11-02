@@ -7,14 +7,15 @@
     - name: Install apt libssl for rbenv
       apt: name={{item}} state=installed
       with_items:
+        - memcached
         - libssl-dev
         - libreadline-dev
-        - build-essential 
-        - patch 
-        - ruby-dev 
-        - zlib1g-dev 
+        - build-essential
+        - patch
+        - ruby-dev
+        - zlib1g-dev
         - liblzma-dev
-        - libffi-dev 
+        - libffi-dev
         - git
         - libpq-dev
       tags:

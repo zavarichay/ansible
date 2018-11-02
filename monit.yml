@@ -1,0 +1,14 @@
+# vim:ft=ansible:
+---
+- hosts: all
+  pre_tasks:
+    - name: install | dependencies
+      apt:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - monit
+      tags:
+        - monit
+  roles:
+    - monit

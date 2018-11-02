@@ -1,5 +1,5 @@
 [all]
-brandymint.ru
+brandymint ansible_host=163.172.148.128
 onelec.ru
 srv-1.kiiiosk.ru
 db2.kiiiosk.ru
@@ -22,3 +22,6 @@ srv-1.kiiiosk.ru
 [elastic]
 srv-1.kiiiosk.ru
 db2.kiiiosk.ru
+
+[bitcoin]
+srv-1.kiiiosk.ru
