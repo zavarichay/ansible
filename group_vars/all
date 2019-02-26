@@ -10,7 +10,7 @@ rbenv_users:
 
 # elasticsearch 9200 тут не светим, потому что
 # к нему открывается доступ с IP сервера
-iptables_allowed_tcp_ports: [22, 25, 80, 443, 10050]
+iptables_allowed_tcp_ports: [22, 25, 80, 443, 4096, 10050]
 
 iptables_raw_rules:
   - "-A INPUT -p tcp -m tcp --tcp-flags FIN,SYN,RST,PSH,ACK,URG NONE -j REJECT --reject-with icmp-port-unreachable"
