@@ -1,14 +1,12 @@
 [all]
 brandymint ansible_host=163.172.148.128
 onelec.ru
-srv-1.kiiiosk.ru
 db2.kiiiosk.ru
 office.brandymint.ru
 office2.brandymint.ru ansible_ssh_port=2222
 dev.onelec.ru ansible_ssh_port=65409
 
 [kiosk]
-srv-1.kiiiosk.ru
 db2.kiiiosk.ru
 
 [onelec]
@@ -17,10 +15,8 @@ onelec.ru
 [postgresql]
 onelec.ru
 db2.kiiiosk.ru
-srv-1.kiiiosk.ru
 
 [elastic]
-srv-1.kiiiosk.ru
 db2.kiiiosk.ru
 
 [bitcoin]
