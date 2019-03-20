@@ -1,0 +1,7 @@
+users_groups:
+  - name: www-data
+    system: true
+users:
+  - name: "{{ merchantly_user }}"
+    group: www-data
+    auth_key: "{{ merchantly_user_auth_keys | default([]) }}"

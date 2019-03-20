@@ -1,0 +1,70 @@
+- name: ensure local groups are created
+  group:
+    name: "{{ users_groups_item.name }}"
+    system: "{{ users_groups_item.system | default(false) }}"
+  with_items: "{{ users_groups }}"
+  loop_control:
+    loop_var: users_groups_item
+    label: "{{ users_groups_item.name }}"
+
+- name: ensure local users with groups specified are created
+  user:
+    name: "{{ users_item.name }}"
+    system: "{{ users_item.system | default(false) }}"
+    shell: "{{ users_item.shell | default(users_default_shell) }}"
+    append: yes
+    groups: "{{ users_item.group }}"
+    password: "{{ users_item.password | default(none) }}"
+    update_password: "{{ users_item.update_password | default('on_create') }}"
+    create_home: "{{ users_item.create_home | default(true) }}"
+    state: present
+  when: users_item.group is defined
+  with_items: "{{ users }}"
+  loop_control:
+    loop_var: users_item
+    label: "{{ users_item.name }}"
+  
+- name: ensure local users with no groups specified are created
+  user:
+    name: "{{ users_item.name }}"
+    system: "{{ users_item.system | default(false) }}"
+    shell: "{{ users_item.shell | default(users_default_shell) }}"
+    password: "{{ users_item.password | default(none) }}"
+    update_password: "{{ users_item.update_password | default('on_create') }}"
+    create_home: "{{ users_item.create_home | default(true) }}"
+    state: present
+  when: users_item.group is not defined
+  with_items: "{{ users }}"
+  loop_control:
+    loop_var: users_item
+    label: "{{ users_item.name }}"
+  
+- name: ensure users ssh key is installed
+  authorized_key:
+    user: "{{ users_item.name }}"
+    key: "{{ users_item.auth_key }}"
+    exclusive: "{{ users_item.auth_key_exclusive | default(false) }}"
+    manage_dir: yes
+    state: present
+  when:
+  - users_item.auth_key is defined
+  - users_item.auth_key is string
+  with_items: "{{ users }}"
+  loop_control:
+    loop_var: users_item
+    label: "{{ users_item.name }}"
+
+- name: ensure users ssh keys are installed
+  authorized_key:
+    user: "{{ users_item.name }}"
+    key: "{{ users_item.auth_key | join('\n') }}"
+    exclusive: "{{ users_item.auth_key_exclusive | default(false) }}"
+    manage_dir: yes
+    state: present
+  when:
+  - users_item.auth_key is defined
+  - users_item.auth_key is not string
+  with_items: "{{ users }}"
+  loop_control:
+    loop_var: users_item
+    label: "{{ users_item.name }}"

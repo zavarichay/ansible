@@ -1,0 +1,6 @@
+# User account that will be used to configure environment and run application.
+merchantly_user: merchantly
+
+# List of the ssh authorized keys that will be added to the application user account.
+#merchantly_user_auth_keys:
+#  - "{{ lookup('file', 'public_keys/john.smith') }}"

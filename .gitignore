@@ -102,3 +102,12 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# ansible inventory
+/group_vars/*
+/host_vars/*
+/hosts
+/hosts.*
+!*.example
+!/*.example
+!/group_vars/all.yml
