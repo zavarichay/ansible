@@ -1,0 +1,20 @@
+- hosts: all
+  pre_tasks:
+    - name: ensure ruby packages are installed
+      apt:
+        name:
+          - memcached
+          - libssl-dev
+          - libreadline-dev
+          - build-essential
+          - patch
+          - ruby-dev
+          - zlib1g-dev
+          - liblzma-dev
+          - libffi-dev
+          - git
+          - libpq-dev
+        state: present
+  roles:
+    - rbenv
+    - direnv

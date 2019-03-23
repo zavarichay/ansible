@@ -24,7 +24,6 @@
 # VARIABLES
 ##
 playbook   ?= main
-roles_path ?= "roles/"
 env        ?= hosts.ini
 mkfile_dir ?= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 ifeq ("$(wildcard $(mkfile_dir)pass.sh)", "")
@@ -47,8 +46,8 @@ endif
 # TASKS
 ##
 .PHONY: install
-install: ## make install [roles_path=roles/] # Install roles dependencies
-	@ansible-galaxy install --roles-path="$(roles_path)" --role-file="requirements.yml"
+install: ## make install # Install roles dependencies
+	@ansible-galaxy install --role-file="requirements.yml"
 
 .PHONY: inventory
 inventory: ## make inventory [provider=<ec2|gce...>] [env=hosts] # Download dynamic inventory from Ansible's contrib
