@@ -1,8 +1,0 @@
-- src: https://github.com/Oefenweb/ansible-yarn.git
-  name: yarn
-
-- src: https://github.com/tepez/ansible-role-nvm.git
-  name: nvm
-  
-- src: https://github.com/zzet/ansible-rbenv-role.git
-  name: rbenv

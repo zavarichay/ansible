@@ -1,0 +1,9 @@
+[submodule "roles/yarn"]
+	path = roles/yarn
+	url = https://github.com/Oefenweb/ansible-yarn.git
+[submodule "roles/nvm"]
+	path = roles/nvm
+	url = https://github.com/tepez/ansible-role-nvm.git
+[submodule "roles/rbenv"]
+	path = roles/rbenv
+	url = https://github.com/zzet/ansible-rbenv-role.git
