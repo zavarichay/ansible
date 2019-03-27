@@ -23,31 +23,38 @@
 ##
 # VARIABLES
 ##
-playbook   ?= main
-env        ?= hosts.ini
+playbook ?= main
+env ?= hosts.ini
+galaxy_req ?= requirements.galaxy.yml
+python_req ?= requirements.python.txt
 mkfile_dir ?= $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
+python_virtualenv_dir ?= $(HOME)/python_virtualenvs
 ifeq ("$(wildcard $(mkfile_dir)pass.sh)", "")
-	opts     ?= $(args)
+	opts ?= $(args)
 else # Handle vault password if any
 	ifeq ("$(shell $(mkfile_dir)pass.sh 2> /dev/null)", "")
-		opts     ?= $(args)
+		opts ?= $(args)
 	else
-		opts     ?= $(args) --vault-password-file=$(mkfile_dir)pass.sh
+		opts ?= $(args) --vault-password-file=$(mkfile_dir)pass.sh
 	endif
 endif
 ifneq ("$(limit)", "")
-	opts     := $(opts) --limit="$(limit)"
+	opts := $(opts) --limit="$(limit)"
 endif
 ifneq ("$(tag)", "")
-	opts     := $(opts) --tag="$(tag)"
+	opts := $(opts) --tag="$(tag)"
 endif
 
 ##
 # TASKS
 ##
 .PHONY: install
-install: ## make install # Install roles dependencies
-	@ansible-galaxy install --role-file="requirements.yml"
+install: ## make install # Install dependencies and requirements
+	@git submodule update --init
+	@. $(python_virtualenv_dir)/ansible/bin/activate \
+		&& if [ -f "$(galaxy_req)" ]; then ansible-galaxy install --role-file="$(galaxy_req)"; fi
+	@. $(python_virtualenv_dir)/ansible/bin/activate \
+		&& if [ -f "$(python_req)" ]; then pip3 install --requirement "$(python_req)"; fi
 
 .PHONY: inventory
 inventory: ## make inventory [provider=<ec2|gce...>] [env=hosts] # Download dynamic inventory from Ansible's contrib
@@ -97,16 +104,15 @@ cmdb: ## make cmdb # Create HTML inventory report
 
 .PHONY: bootstrap
 bootstrap: ## make bootstrap # Install ansible (Debian/Ubuntu only)
-	@sudo apt-get update \
-		&& sudo apt-get install python3-pip git sshpass \
-		&& sudo pip3 install --upgrade pip \
-		&& sudo pip install --upgrade virtualenv \
-		&& (test -d ~/python_virtualenvs || mkdir ~/python_virtualenvs) \
-		&& (test -f ~/python_virtualenvs/ansible/bin/activate || virtualenv ~/python_virtualenvs/ansible) \
-		&& . ~/python_virtualenvs/ansible/bin/activate \
-		&& pip3 install --upgrade ansible ansible-modules-hashivault \
-		&& echo "Run the following command in your shell to activate a virtual environment with the ansible installed:" \
-    && echo ". ~/python_virtualenvs/ansible/bin/activate"
+	@sudo apt-get update
+	@sudo DEBIAN_FRONTEND=noninteractive apt-get --assume-yes install python3-pip git sshpass
+	@sudo pip3 install --upgrade pip
+	@sudo pip install --upgrade virtualenv
+	@if [ ! -d "$(python_virtualenv_dir)" ]; then mkdir "$(python_virtualenv_dir)"; fi
+	@if [ ! -f "$(python_virtualenv_dir)/ansible/bin/activate" ]; then virtualenv "$(python_virtualenv_dir)/ansible"; fi
+	@. $(python_virtualenv_dir)/ansible/bin/activate && pip3 install --upgrade ansible ansible-modules-hashivault
+	@echo "Run the following command in your shell to activate a virtual environment with the ansible installed:"
+	@echo ". $(python_virtualenv_dir)/ansible/bin/activate"
 
 .PHONY: mandatory-host-param mandatory-file-param
 mandatory-host-param:
