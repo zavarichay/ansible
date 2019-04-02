@@ -13,3 +13,6 @@
 [submodule "roles/redis"]
 	path = roles/redis
 	url = https://github.com/geerlingguy/ansible-role-redis.git
+[submodule "roles/postgresql"]
+	path = roles/postgresql
+	url = https://github.com/WolfgangPecho/postgresql.git

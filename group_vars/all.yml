@@ -21,6 +21,66 @@ es_enable_xpack: false
 es_plugins:
   - plugin: "http://dl.bintray.com/content/imotov/elasticsearch-plugins/org/elasticsearch/elasticsearch-analysis-morphology/{{ es_version }}/elasticsearch-analysis-morphology-{{ es_version }}.zip"
 
+postgresql_version: 9.6
+postgresql_users:
+  - name: "{{ merchantly_db_user }}"
+    pass: "{{ merchantly_db_password }}"
+    encrypted: no
+postgresql_databases:
+  - name: "{{ merchantly_db_name }}"
+    owner: postgres
+postgresql_user_privileges:
+  - name: "{{ merchantly_db_user }}"
+    db: "{{ merchantly_db_name }}"
+    priv: "ALL"
+postgresql_database_extensions:
+  - db: "{{ merchantly_db_name }}"
+    extensions:
+      - btree_gin
+      - hstore
+      - intarray
+      - pg_buffercache
+      - pg_stat_statements
+      - pg_trgm
+      - plpgsql
+      - uuid-ossp
+postgresql_pg_hba_default:
+  - type: local
+    database: all
+    user: "{{ postgresql_admin_user }}"
+    address: ""
+    method: "{{ postgresql_default_auth_method }}"
+    comment: ""
+  - type: local
+    database: all
+    user: all
+    address: ""
+    method: "{{ postgresql_default_auth_method }}"
+    comment: "\"local\" is for Unix domain socket connections only"
+  - type: host
+    database: all
+    user: all
+    address: "127.0.0.1/32"
+    method: "{{ postgresql_default_auth_method }}"
+    comment: "IPv4 local connections:"
+  - type: host
+    database: all
+    user: all
+    address: "::1/128"
+    method: "{{ postgresql_default_auth_method }}"
+    comment: "IPv6 local connections:"
+postgresql_max_connections: 250
+postgresql_max_memory: "{{ merchantly_db_max_memory | default(ansible_memtotal_mb / 4) }}"
+postgresql_shared_buffers: "{{ postgresql_max_memory | int / 4 }}MB"
+postgresql_work_mem: "{{ postgresql_max_memory }}KB"
+postgresql_effective_cache_size: "{{ postgresql_max_memory | int / 16 }}MB"
+postgresql_min_wal_size: 1024MB
+postgresql_max_wal_size: 2048MB
+postgresql_wal_buffers: 16MB
+postgresql_maintenance_work_mem: 128MB
+postgresql_checkpoint_completion_target: 0.7
+postgresql_default_statistics_target: 100
+
 thumbor_ports: "{{ range(8881, 8881 + merchantly_thumbor_count | default(3), 1) | list }}"
 thumbor_security_key: "{{ merchantly_thumbor_security_key }}"
 thumbor_allowed_sources_site_name:
