@@ -1,4 +1,6 @@
 - hosts: all
+  become: yes
+  gather_facts: yes
   pre_tasks:
     - name: ensure ruby packages are installed
       apt:
