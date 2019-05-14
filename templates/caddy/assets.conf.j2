@@ -1,0 +1,21 @@
+{{ item.server_name }} {
+  errors {{ item.app_dir }}/shared/log/caddy_assets_error.log
+
+  gzip
+
+  tls {{ caddy_tls_email }} {
+    max_certs {{ item.max_certs }}
+  }
+
+  header / {
+    -Server
+    Access-Control-Allow-Origin *
+    Access-Control-Allow-Credentials true
+    Access-Control-Allow-Methods GET
+
+    Cache-Control "public, max-age=533280"
+    Pragma public
+  }
+
+  root {{ item.root | default( item.app_dir + '/current/public' ) }}
+}

@@ -20,6 +20,11 @@ caddy_vhosts:
     upstreams: "127.0.0.1:{{thumbor_ports|join(' 127.0.0.1:')}}"
     template: "templates/caddy/thumbor.conf.j2"
     max_certs: 10
+  - filename: 'merchantly_assets.conf'
+    server_name: 'assets.{{ merchantly_site_name }}'
+    template: "templates/caddy/assets.conf.j2"
+    app_dir: "/home/{{ merchantly_user }}/{{ merchantly_site_name }}"
+    max_certs: 10
 
 users_groups:
   - name: www-data
