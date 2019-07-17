@@ -47,7 +47,7 @@ rbenv_users:
 nvm_env: user
 nvm_users:
   - "{{ merchantly_user }}"
-nvm_default_node_version: v8.9.4
+nvm_default_node_version: v10.13.0
 nvm_node_versions:
   - "{{ nvm_default_node_version }}"
 nvm_root: "$HOME/.nvm"
