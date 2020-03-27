@@ -1,0 +1,8 @@
+# {{ ansible_managed }}
+
+ssl_prefer_server_ciphers on;
+
+{% if merchantly_nginx_ssl and merchantly_nginx_ssl_certificate and merchantly_nginx_ssl_certificate_key %}
+ssl_certificate {{ merchantly_nginx_ssl_certificate }};
+ssl_certificate_key {{ merchantly_nginx_ssl_certificate_key }};
+{% endif %}

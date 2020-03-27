@@ -1,0 +1,16 @@
+# {{ ansible_managed }}
+
+server {
+    listen 80 default_server;
+
+{% if merchantly_nginx_ssl %}
+    listen 443 ssl default_server;
+    include server.conf.d/https_redirect.conf;
+    include server.conf.d/https.conf;
+{% endif %}
+
+    include server.conf.d/puma_production.conf;
+
+    access_log /var/log/nginx/default_server.access.log full;
+    error_log /var/log/nginx/default_server.error.log;
+}

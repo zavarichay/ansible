@@ -126,3 +126,12 @@ thumbor_allowed_sources_site_name:
   - ".+\\.{{ merchantly_site_name | replace('.', '\\.') }}"
 thumbor_allowed_sources_s3: "{{ [] if merchantly_static_s3 | default('') == '' else [merchantly_static_s3 | replace('.', '\\.')] }}"
 thumbor_allowed_sources: "{{ thumbor_allowed_sources_site_name + thumbor_allowed_sources_s3 }}"
+
+merchantly_nginx_site_name: "{{ merchantly_site_name }}"
+merchantly_nginx_root: "/home/{{ merchantly_user }}/{{ merchantly_site_name }}/current/public"
+merchantly_nginx_puma_socket: "/home/{{ merchantly_user }}/{{ merchantly_site_name }}/shared/current/public"
+merchantly_nginx_ssl: "{{ merchantly_ssl | default(false) }}"
+merchantly_nginx_ssl_certificate: "{{ merchantly_ssl_certificate | default('') }}"
+merchantly_nginx_ssl_certificate_key: "{{ merchantly_ssl_certificate_key | default('') }}"
+merchantly_nginx_hsts_max_age: 0
+merchantly_nginx_thumbor_ports: "{{ thumbor_ports }}"

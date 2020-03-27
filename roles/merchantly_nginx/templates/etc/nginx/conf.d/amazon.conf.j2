@@ -1,0 +1,4 @@
+# {{ ansible_managed }}
+
+proxy_cache_path /var/cache/nginx/static levels=1:2 keys_zone=staticcache:1000m max_size=32000m inactive=1M;
+proxy_cache_path /var/cache/nginx/aws levels=1:2 keys_zone=s3_cache:10m max_size=500m inactive=60m use_temp_path=off;

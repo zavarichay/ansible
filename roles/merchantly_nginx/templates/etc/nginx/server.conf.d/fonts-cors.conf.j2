@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+location ~* \.(eot|ttf|woff2?)$ {
+    expires max;
+    gzip_static on;
+
+    access_log off;
+
+    add_header Cache-Control public;
+    add_header Pragma public;
+    add_header Access-Control-Allow-Origin *;
+}

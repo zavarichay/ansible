@@ -1,0 +1,9 @@
+merchantly_nginx_site_name: 'default'
+merchantly_nginx_root: "/var/www"
+merchantly_nginx_puma_socket: ""
+merchantly_nginx_ssl: false
+merchantly_nginx_ssl_certificate: ""
+merchantly_nginx_ssl_certificate_key: ""
+merchantly_nginx_hsts_max_age: 0
+merchantly_nginx_block_addresses: []
+merchantly_nginx_thumbor_ports:

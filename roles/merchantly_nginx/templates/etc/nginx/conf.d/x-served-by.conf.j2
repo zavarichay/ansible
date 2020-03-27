@@ -1,0 +1,7 @@
+# {{ ansible_managed }}
+
+map $upstream_addr $x_served_by {
+    127.0.0.1:3030 2/2;
+}
+
+add_header X-Served-By $x_served_by;

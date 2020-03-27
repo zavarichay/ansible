@@ -31,3 +31,9 @@ merchantly_thumbor_security_key: fDGZdT84C9sJWUpgo1xRG4bHyQ8sCjyu
 
 # Hostname of the AWS S3 bucket where static files are placed
 #merchantly_static_s3: mybacket.s3.eu-central-1.amazonaws.com
+
+# Settings to enable HTTPS
+# You must define path to the certificate chain and path to the private key.
+#merchantly_ssl: true
+#merchantly_ssl_certificate: "/etc/letsencrypt/live/{{ merchantly_site_name }}/fullchain.pem"
+#merchantly_ssl_certificate_key: "/etc/letsencrypt/live/{{ merchantly_site_name }}/privkey.pem"

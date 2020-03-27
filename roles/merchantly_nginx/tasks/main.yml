@@ -1,0 +1,95 @@
+- name: ensure nginx is installed
+  apt:
+    name: nginx
+    state: latest
+
+- name: ensure nginx configuration directories are exists
+  file:
+    path: "/etc/nginx/{{ item }}"
+    state: directory
+  with_items:
+    - conf.d  
+    - server.conf.d
+    - sites-available
+    - sites-enabled
+    - ssl
+  notify:
+    - reload nginx
+
+- name: ensure default site is disabled
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify:
+    - reload nginx
+
+- name: ensure nginx cache directories are exists
+  file:
+    path: "/var/cache/nginx/{{ item }}"
+    state: directory
+    owner: www-data
+    group: www-data
+    mode: 0750
+  with_items:
+    - static
+    - aws
+    - thumbor
+  notify:
+    - reload nginx
+
+- name: ensure diffie-hellman parameters file is generated (can take a while)
+  openssl_dhparam:
+    path: /etc/nginx/ssl/dhparam.pem
+    owner: root
+    mode: 0600
+  when: merchantly_nginx_ssl
+  notify:
+    - reload nginx
+
+- name: ensure nginx configuration files are installed
+  template:
+    src: "{{ item }}"
+    dest: "/{{ item | regex_replace('\\.j2$', '') }}"
+    owner: root
+    mode: 0644
+  with_items:
+    - etc/nginx/nginx.conf.j2
+    - etc/nginx/conf.d/10-gzip.conf.j2
+    - etc/nginx/conf.d/10-includes.conf.j2
+    - etc/nginx/conf.d/amazon.conf.j2
+    - etc/nginx/conf.d/hide_version.conf.j2
+    - etc/nginx/conf.d/ssl.conf.j2
+    - etc/nginx/conf.d/thumbor.conf.j2
+    - etc/nginx/conf.d/upstreams.conf.j2
+    - etc/nginx/conf.d/www2without-www.conf.j2
+    - etc/nginx/conf.d/x-served-by.conf.j2
+    - etc/nginx/server.conf.d/assets-cache.conf.j2
+    - etc/nginx/server.conf.d/blockips.conf.j2
+    - etc/nginx/server.conf.d/fonts-cors.conf.j2
+    - etc/nginx/server.conf.d/https.conf.j2
+    - etc/nginx/server.conf.d/https_redirect.conf.j2
+    - etc/nginx/server.conf.d/http_redirect.conf.j2
+    - etc/nginx/server.conf.d/internal_redirect.conf.j2
+    - etc/nginx/server.conf.d/proxy_params.conf.j2
+    - etc/nginx/server.conf.d/puma_production.conf.j2
+    - etc/nginx/sites-available/merchantly.conf.j2
+    - etc/nginx/sites-available/thumbor.conf.j2
+  notify:
+    - reload nginx
+
+- name: ensure nginx sites are enabled
+  file:
+    src: "/etc/nginx/sites-available/{{ item }}.conf"
+    dest: "/etc/nginx/sites-enabled/{{ item }}.conf"
+    state: link
+  with_items:
+    - merchantly
+    - thumbor
+  notify:
+    - reload nginx
+
+- name: ensure nginx service is started and enabled
+  service:
+    name: nginx
+    enabled: yes
+    state: started

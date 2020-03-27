@@ -1,0 +1,12 @@
+# {{ ansible_managed }}
+
+{# https://gist.github.com/jrom/1760790 #}
+if ($scheme != "https") {
+    set $test A;
+}
+if ($request_method = GET) {
+    set $test  "${test}B";
+}
+if ($test = AB) {
+    rewrite ^ https://$host$uri permanent;
+}

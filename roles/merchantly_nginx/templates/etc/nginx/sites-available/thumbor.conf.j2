@@ -1,0 +1,51 @@
+# {{ ansible_managed }}
+
+upstream thumbor {
+{% for port in merchantly_nginx_thumbor_ports %}
+    server 127.0.0.1:{{ port }} weight=5 fail_timeout=30;
+{% endfor %}
+}
+
+server {
+    server_name ~^thumbor\d?\.{{ merchantly_nginx_site_name | replace('.', '\\.') }}$;
+    listen 80;
+
+{% if merchantly_nginx_ssl %}
+    listen 443 ssl;
+    include server.conf.d/https_redirect.conf;
+    include server.conf.d/https.conf;
+{% endif %}
+
+    access_log /var/log/nginx/thumbor.access.log;
+    error_log /var/log/nginx/thumbor.error.log;
+
+    add_header X-Cache-Status $upstream_cache_status;
+    add_header Cache-Control public;
+    expires 360d;
+
+    location = / {
+        return 302 $scheme://{{ merchantly_nginx_site_name }};
+    }
+
+    location / {
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+
+        proxy_cache_methods GET HEAD;
+        proxy_cache_key "$http_if_none_match$request_method:$scheme://$host$request_uri";
+        proxy_cache_use_stale error timeout invalid_header http_500 http_503;
+        proxy_cache thumbor_cache_zone;
+        proxy_cache_valid 200 360d;
+        proxy_cache_valid 502 2m;
+        proxy_cache_valid 404 2m;
+        proxy_cache_valid 301 302 1h;
+        proxy_cache_valid any 1m;
+
+        proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504 http_404;
+
+        proxy_redirect off;
+        proxy_pass http://thumbor;
+    }
+}

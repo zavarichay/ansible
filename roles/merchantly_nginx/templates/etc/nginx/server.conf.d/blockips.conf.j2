@@ -1,0 +1,5 @@
+# {{ ansible_managed }}
+
+{% for address in merchantly_nginx_block_addresses | default([]) %}
+deny {{ address }};
+{% endfor %}

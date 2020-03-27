@@ -7,3 +7,4 @@
 - import_playbook: postgresql.yml
 - import_playbook: imagemagick.yml
 - import_playbook: thumbor.yml
+- import_playbook: merchantly_nginx.yml

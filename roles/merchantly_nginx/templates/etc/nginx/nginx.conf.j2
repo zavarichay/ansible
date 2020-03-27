@@ -1,0 +1,36 @@
+# {{ ansible_managed }}
+
+user www-data;
+worker_processes auto;
+pid /run/nginx.pid;
+
+events {
+    worker_connections 8000;
+}
+
+http {
+    log_format ir '$remote_addr [$time_local] "$host" "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_time $upstream_response_time $upstream_cache_status';
+    log_format full '$remote_addr [$time_local] "$host" "$request" $status $body_bytes_sent "$http_referer" "$http_user_agent" $request_time $upstream_response_time $upstream_cache_status';
+
+    etag on;
+
+    # Mitigating the HTTPoxy Vulnerability
+    proxy_set_header Proxy "";
+    fastcgi_param HTTP_PROXY "";
+
+    underscores_in_headers on;
+    proxy_max_temp_file_size 0;
+    sendfile on;
+    tcp_nopush on;
+    tcp_nodelay on;
+    types_hash_max_size 2048;
+    map_hash_bucket_size 64;
+    server_names_hash_bucket_size 64;
+    default_type application/octet-stream;
+    client_max_body_size 100M;
+    proxy_connect_timeout 900;
+    proxy_send_timeout 900;
+    proxy_read_timeout 900;
+
+    include /etc/nginx/conf.d/*.conf;
+}

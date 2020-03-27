@@ -1,0 +1,42 @@
+# {{ ansible_managed }}
+
+location ~* ^/internal_redirect/(.*) {
+    internal;
+    set $download_url $1;
+
+    access_log /var/log/nginx/internal_redirects.log ir;
+
+{#
+    If you use variables in proxy pass you need to
+    tell nginx how to resolve your host
+    otherwise you will get 502 errors
+    you could also use google 8.8.8.8
+#}
+    resolver 8.8.8.8;
+
+    proxy_buffering off;
+    proxy_set_header Content-Length ""; 
+    proxy_set_header Cookie ""; 
+
+    proxy_hide_header x-amz-request-id;
+    proxy_hide_header x-amz-meta-uid;
+    proxy_hide_header x-amz-id-2;
+    proxy_hide_header x-amz-meta-mode;
+    proxy_hide_header x-amz-meta-mtime;
+    proxy_hide_header x-amz-meta-gid;
+    proxy_hide_header x-amz-version-id;
+    proxy_hide_header accept-ranges;
+
+{#
+    Do not touch local disks when proxying
+    content to clients
+#}
+    proxy_method GET;
+    proxy_pass_request_body off;
+    proxy_max_temp_file_size 0;
+
+    proxy_redirect off; 
+    proxy_intercept_errors on; 
+
+    proxy_pass $download_url;
+}
