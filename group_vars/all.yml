@@ -37,9 +37,9 @@ users:
 rbenv:
   env: user
   version: v1.1.1
-  default_ruby: 2.6.2
+  default_ruby: 2.6.5
   rubies:
-    - version: 2.6.2
+    - version: 2.6.5
 
 rbenv_users:
   - "{{ merchantly_user }}"
@@ -47,7 +47,7 @@ rbenv_users:
 nvm_env: user
 nvm_users:
   - "{{ merchantly_user }}"
-nvm_default_node_version: v10.13.0
+nvm_default_node_version: v10.16.3
 nvm_node_versions:
   - "{{ nvm_default_node_version }}"
 nvm_root: "$HOME/.nvm"
