@@ -1,3 +1,12 @@
 - hosts: all
+  pre_tasks:
+    - name: ensure python-dev package are installed
+      apt:
+        name:
+          - python-dev
+    - name: ensure libpq-dev package are installed
+      apt:
+        name:
+          - libpq-dev
   roles:
     - postgresql
