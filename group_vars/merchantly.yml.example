@@ -6,7 +6,7 @@ merchantly_user: merchantly
 #  - "{{ lookup('file', 'public_keys/john.smith') }}"
 
 # Name of database for the application
-merchantly_db_name: "merchantly_production_{{ merchantly_user }}"
+merchantly_db_name: "merchantly_production"
 
 # Username for database account that the application will be used.
 merchantly_db_user: "{{ merchantly_user }}"
