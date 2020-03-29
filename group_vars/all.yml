@@ -129,7 +129,7 @@ thumbor_allowed_sources: "{{ thumbor_allowed_sources_site_name + thumbor_allowed
 
 merchantly_nginx_site_name: "{{ merchantly_site_name }}"
 merchantly_nginx_root: "/home/{{ merchantly_user }}/{{ merchantly_site_name }}/current/public"
-merchantly_nginx_puma_socket: "/home/{{ merchantly_user }}/{{ merchantly_site_name }}/shared/current/public"
+merchantly_nginx_puma_socket: "/home/{{ merchantly_user }}/{{ merchantly_site_name }}/shared/tmp/sockets/puma.sock"
 merchantly_nginx_ssl: "{{ merchantly_ssl | default(false) }}"
 merchantly_nginx_ssl_certificate: "{{ merchantly_ssl_certificate | default('') }}"
 merchantly_nginx_ssl_certificate_key: "{{ merchantly_ssl_certificate_key | default('') }}"
