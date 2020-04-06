@@ -1,0 +1,2 @@
+- import_playbook: redis.yml
+- import_playbook: postgresql.yml
