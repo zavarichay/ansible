@@ -1,0 +1,2 @@
+- import_playbook: thumbor.yml
+- import_playbook: merchantly_nginx.yml
