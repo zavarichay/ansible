@@ -87,9 +87,25 @@ debug: mandatory-host-param ## make debug host=hostname [env=hosts] [args=<ansib
 dry-run: ## make dry-run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook in dry run mode
 	@env=$(env) ansible-playbook --inventory-file="$(env)" --diff --check $(opts) "$(playbook).yml"
 
-.PHONY: run
-run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook
+.PHONY: run-all
+run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook main with all roles
 	@env=$(env) ansible-playbook --inventory-file="$(env)" --diff $(opts) "$(playbook).yml"
+
+.PHONY: run-frontend
+run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook frontend
+	@env=$(env) ansible-playbook --inventory-file="$(env)" --diff $(opts) "frontend.yml"
+
+.PHONY: run-application
+run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook application
+	@env=$(env) ansible-playbook --inventory-file="$(env)" --diff $(opts) "application.yml"
+
+.PHONY: run-db
+run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook db
+	@env=$(env) ansible-playbook --inventory-file="$(env)" --diff $(opts) "db.yml"
+
+.PHONY: run-srch
+run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook srch
+	@env=$(env) ansible-playbook --inventory-file="$(env)" --diff $(opts) "srch.yml"
 
 group ?=all
 .PHONY: list
