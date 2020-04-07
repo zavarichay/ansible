@@ -1,2 +1,3 @@
+- import_playbook: users.yml
 - import_playbook: thumbor.yml
 - import_playbook: merchantly_nginx.yml
