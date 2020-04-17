@@ -1,3 +1,4 @@
+- import_playbook: users.yml
 - hosts: all
   roles:
     - redis

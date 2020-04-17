@@ -107,6 +107,10 @@ run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansibl
 run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook srch
 	@env=$(env) ansible-playbook --inventory-file="$(env)" --diff $(opts) "srch.yml"
 
+.PHONY: run-redis
+run: ## make run [playbook=setup] [env=hosts] [tag=<ansible tag>] [limit=<ansible host limit>] [args=<ansible-playbook arguments>] # Run a playbook srch
+	@env=$(env) ansible-playbook --inventory-file="$(env)" --diff $(opts) "redis.yml"
+
 group ?=all
 .PHONY: list
 list: ## make list [group=all] [env=hosts] # List hosts inventory

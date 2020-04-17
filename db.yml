@@ -1,3 +1,2 @@
 - import_playbook: users.yml
-- import_playbook: redis.yml
 - import_playbook: postgresql.yml
