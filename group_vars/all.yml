@@ -60,6 +60,9 @@ es_plugins:
   - plugin: "http://dl.bintray.com/content/imotov/elasticsearch-plugins/org/elasticsearch/elasticsearch-analysis-morphology/{{ es_version }}/elasticsearch-analysis-morphology-{{ es_version }}.zip"
 
 postgresql_version: 10
+postgresql_listen_address: 192.168.1.1
+postgresql_listen_addresses:
+  - {{ postgresql_listen_address }}
 postgresql_users:
   - name: "{{ merchantly_db_user }}"
     pass: "{{ merchantly_db_password }}"
@@ -107,6 +110,12 @@ postgresql_pg_hba_default:
     address: "::1/128"
     method: "{{ postgresql_default_auth_method }}"
     comment: "IPv6 local connections:"
+  - type: host
+    database: all
+    user: all
+    address: "{{ postgresql_listen_address }}/32"
+    method: "{{ postgresql_default_auth_method }}"
+    comment: "IPv4 connections:"
 postgresql_max_connections: 250
 postgresql_max_memory: "{{ merchantly_db_max_memory | default(ansible_memtotal_mb / 4) | int }}"
 postgresql_shared_buffers: "{{ (postgresql_max_memory | int / 4 ) | int }}MB"
